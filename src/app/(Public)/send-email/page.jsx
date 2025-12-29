@@ -11,6 +11,8 @@ export default function SendEmailPage() {
 
     const handleSubmit = async () => {
 
+        setLoading(true);
+
         try {
             const response = await axios.post("/api/forgot-password", { email }, { headers: { "Content-Type": "application/json" } });
             toast(response.data.message);
@@ -21,6 +23,8 @@ export default function SendEmailPage() {
 
         }
 
+        setLoading(false);
+
     }
 
     return (
@@ -29,8 +33,8 @@ export default function SendEmailPage() {
 
             <div className="relative bg-white text-gray-500 w-full max-w-100 mx-4 p-6 rounded-xl shadow-lg">
 
-                <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
-                    Welcome back
+                <h2 className="text-sm mb-6 text-center text-gray-800">
+                    <span className="text-2xl font-semibold" >Send your Email</span><br/> to reset the password
                 </h2>
 
                 <input

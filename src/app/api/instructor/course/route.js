@@ -4,6 +4,7 @@ import courseModel from "../../../../../models/Course";
 import { v2 as cloudinary } from "cloudinary";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
+import enrolledCourseModel from "../../../../../models/EnrolledCourse";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -76,7 +77,14 @@ export async function GET() {
         }
 
         await connectDB();
-        const data = await courseModel.find({ instructorId: session.user.id });
+        const courses = await courseModel.find({ instructorId: session.user.id });
+
+        const data = await Promise.all(
+            courses?.map(async (course) => {
+                const studentsCount = await enrolledCourseModel.countDocuments({ courseId: course._id });
+                return { ...course.toObject(), studentsCount }
+            }))
+
         return NextResponse.json({ status: true, message: data });
 
     } catch (error) {
@@ -96,7 +104,7 @@ export async function PUT(request) {
         if (!session) {
             return NextResponse.json({ status: false, message: "Unauthorized" })
         }
-        
+
         const formData = await request.formData();
         const data = Object.fromEntries(formData.entries());
         const courseId = formData.get("courseId");
@@ -155,7 +163,7 @@ export async function DELETE(request) {
         if (!session) {
             return NextResponse.json({ status: false, message: "Unauthorized" })
         }
-        
+
         const { Id } = body;
         await connectDB();
         const response = await courseModel.findByIdAndDelete(Id);

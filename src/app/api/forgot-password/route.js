@@ -2,7 +2,7 @@ import crypto from "crypto";
 import connectDB from "../../../../config/connectDB";
 import userModel from "../../../../models/User";
 import { NextResponse } from "next/server";
-import { sendResetEmail } from "@/app/lib/features/sendEmail";
+import { sendResetEmail } from "@/app/lib/sendEmail";
 
 export async function POST(req) {
 
@@ -30,7 +30,17 @@ export async function POST(req) {
 
     const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password/${resetToken}`;
 
-    await sendResetEmail({ to: user.email, resetUrl })
+    try {
+
+        await sendResetEmail(user.email, resetUrl )
+
+    } catch (error) {
+
+        return NextResponse.json({ status: true, message: error.message });
+
+    }
+
+
 
     return NextResponse.json({ status: true, message: "Reset email sent!", resetUrl });
 

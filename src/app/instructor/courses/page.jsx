@@ -94,8 +94,10 @@ export default function CoursesPage() {
                                                     {course.title}
                                                 </td>
 
-                                                <td className="px-4 py-2 whitespace-nowrap">
-                                                    {course.students || "No Enrollments yet"}
+                                                <td className="px-4 py-2 whitespace-nowrap text-center">
+                                                    <span className="px-2 w-15 py-1 rounded text-xs bg-green-100 text-green-700">
+                                                        Students: {course?.studentsCount || 0}
+                                                    </span>
                                                 </td>
 
                                                 <td className="px-4 py-2 whitespace-nowrap">
@@ -144,11 +146,11 @@ export default function CoursesPage() {
                                     </div>
 
                                     <div className="text-xs text-gray-600">
-                                        Students: {course.students || "No Enrollments yet"}
+                                        Students: {course?.studentsCount > 0 ? course?.studentsCount : "No Enrollments yet"}
                                     </div>
 
                                     <div className="text-xs text-gray-600">
-                                        Rating: {course.rating ? `⭐ ${course.rating}` : "No ratings yet"}
+                                        Rating: {course?.comments?.length > 0 ? `⭐ ${course.comments?.length}` : "No ratings"}
                                     </div>
 
                                     <div className="flex w-full items-center justify-between">

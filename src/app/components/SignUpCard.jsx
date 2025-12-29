@@ -14,11 +14,15 @@ function SignUpCard() {
     const [title, setTitle] = useState("");
     const [bio, setBio] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
     const { showSignUpStatus } = useSelector((state) => state.component);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setLoading(true);
 
         if (!name || !email || !password) {
             toast("Please fill in all required fields.")
@@ -42,6 +46,9 @@ function SignUpCard() {
         } catch (error) {
             alert("Signup failed. Please try again.");
         }
+
+        setLoading(false);
+
     };
 
     useEffect(() => {
@@ -55,7 +62,7 @@ function SignUpCard() {
 
     return (
         <div className="fixed min-h-screen w-full left-0 top-0 flex items-center justify-center bg-white/70 z-50">
-            <div className="bg-white shadow-xl rounded-sm p-10 w-full max-w-[400px]">
+            <div className="relative bg-white shadow-xl rounded-sm p-10 w-full max-w-[400px]">
                 <div className="w-full flex items-start justify-between">
                     <div className="text-left">
                         <h2 className="text-2xl font-bold text-gray-800 mb-1">Sign Up</h2>
@@ -65,9 +72,10 @@ function SignUpCard() {
                     </div>
                     <button
                         onClick={() => dispatch(hideSignUpCard())}
-                        className="cursor-pointer"
+                        className="absolute top-7 right-7 text-gray-500 hover:text-gray-800"
+                        aria-label="Close login modal"
                     >
-                        <X />
+                        <X size={20} />
                     </button>
                 </div>
 
@@ -85,7 +93,7 @@ function SignUpCard() {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Enter your full name"
                                     required
-                                    className="w-full px-3 py-2 border rounded-sm focus:outline-none"
+                                    className="w-full bg-transparent border border-gray-300 outline-none rounded-md py-2.5 px-4"
                                 />
                             </div>
 
@@ -100,7 +108,7 @@ function SignUpCard() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter your email"
                                     required
-                                    className="w-full px-3 py-2 border rounded-sm focus:outline-none"
+                                    className="w-full bg-transparent border border-gray-300 outline-none rounded-md py-2.5 px-4"
                                 />
                             </div>
 
@@ -115,7 +123,7 @@ function SignUpCard() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter your password"
                                     required
-                                    className="w-full px-3 py-2 border rounded-sm focus:outline-none"
+                                    className="w-full bg-transparent border border-gray-300 outline-none rounded-md py-2.5 px-4"
                                 />
                             </div>
 
@@ -151,16 +159,20 @@ function SignUpCard() {
                                 <button
                                     type="button"
                                     onClick={() => setStep(2)}
-                                    className="w-full bg-[#00753b] text-white py-2 mt-5 rounded-sm font-semibold hover:bg-[#00753b]/90 transition duration-300 cursor-pointer"
+                                    className={`relative px-6 py-2 mt-3 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer`}
                                 >
                                     Next
                                 </button>
                             ) : (
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#00753b] text-white py-2 mt-5 rounded-sm font-semibold hover:bg-[#00753b]/90 transition duration-300 cursor-pointer"
+                                    disabled={loading}
+                                    className={`relative px-6 py-2 mt-3 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
                                 >
-                                    Sign Up
+                                    {loading &&
+                                        <Spinner className="absolute left-5 w-10 h-6 bottom-[6px]" color="white" />
+                                    }
+                                    Sign in
                                 </button>
                             )}
                         </>
@@ -201,13 +213,13 @@ function SignUpCard() {
                                 <button
                                     type="button"
                                     onClick={() => setStep(1)}
-                                    className="flex-1 border border-gray-300 py-2 rounded-sm hover:bg-gray-50"
+                                    className="relative flex-1 border border-gray-300 px-6 py-2 mt-3 rounded-sm hover:bg-gray-50"
                                 >
                                     Back
                                 </button>
                                 <button
                                     type="submit"
-                                    className="flex-1 bg-[#00753b] text-white py-2 rounded-sm font-semibold hover:bg-[#00753b]/90 transition duration-300 cursor-pointer"
+                                    className={`relative px-6 py-2 mt-3 transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
                                 >
                                     Sign Up
                                 </button>
@@ -216,7 +228,7 @@ function SignUpCard() {
                     )}
                 </form>
 
-                <p className="text-gray-500 text-center mt-6">
+                <p className="text-gray-500 text-center mt-4">
                     Already have an account?{" "}
                     <a
                         onClick={() => dispatch(showLoginCard())}

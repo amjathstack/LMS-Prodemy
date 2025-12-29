@@ -1,12 +1,10 @@
 import { User } from "lucide-react";
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { FaStar } from "react-icons/fa";
 
 export default function ReviewSection({ comments }) {
 
-    useEffect(() => {
-        console.log(comments)
-    }, [comments])
+    const { data: session } = useSession();
 
     return (
         <div className="space-y-4 mt-6">
@@ -29,7 +27,7 @@ export default function ReviewSection({ comments }) {
 
                         <div className="flex-1 rounded-md bg-gray-50 p-3">
                             <p className="text-sm font-medium text-gray-800">
-                                {item?.userId?.name || "Anonymous"}
+                                {item?.userId?._id === session?.user?.id ? "You" : item?.userId?.name || "Anonymous"}
                             </p>
                             <div className="flex mb-1">
                                 {[1, 2, 3, 4, 5].map((star) => (

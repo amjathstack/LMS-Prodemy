@@ -208,7 +208,7 @@ export default function UpdateCoursePage({ data }) {
     return (
         <div className="fixed flex flex-col items-center justify-center w-full h-[100vh] left-0 top-0 bg-black/40 text-sm z-50">
             <div className="max-h-[90%] w-full max-w-200 bg-white py-6 p-2 md:p-8 overflow-hidden rounded-sm shadow-lg">
-                <div className="flex w-full items-center justify-between px-2 mb-8">
+                <div className="flex w-full items-center justify-between mb-8">
                     <h2 className="text-xl md:text-2xl font-semibold">Edit Course</h2>
                     <button
                         className="cursor-pointer"
@@ -218,7 +218,7 @@ export default function UpdateCoursePage({ data }) {
                     </button>
                 </div>
 
-                <div className="max-h-[90%] px-3 bg-white overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400">
+                <div className="max-h-[90%] px-3 bg-white overflow-y-scroll custom-scrollbar">
                     <form onSubmit={handleSubmit} className="space-y-10">
 
                         <div>
@@ -344,7 +344,7 @@ export default function UpdateCoursePage({ data }) {
                                 Click on the image to change thumbnail
                             </p>
 
-                            <label className="flex items-center gap-4 rounded-sm px-3 h-40 cursor-pointer">
+                            <label className="flex items-center max-w-65 justify-center gap-4 border border-gray-300 rounded-sm h-40 cursor-pointer hover:bg-gray-50 outline-none">
                                 {prevThum || formData?.thumbnail ? (
                                     <Image
                                         src={prevThum || formData?.thumbnail}

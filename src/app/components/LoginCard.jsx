@@ -5,19 +5,21 @@ import { hideLoginCard, showSignUpCard } from "../lib/features/componentStatusSl
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { Spinner } from "@material-tailwind/react";
 
 function LoginCard() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { showLoginStatus } = useSelector((state) => state.component);
-  const { loading } = useSelector((state) => state.users);
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const result = await signIn("credentials", {
       redirect: false,
       email,
@@ -26,16 +28,20 @@ function LoginCard() {
 
     if (result?.error) {
       toast.error(result.error);
+      setLoading(false);
       return;
     }
 
     toast.success("Logged in successfully!");
     dispatch(hideLoginCard());
     router.push("/");
+    setLoading(false);
   };
 
   const handleGoogleLogin = () => {
+    setGoogleLoading(true);
     signIn("google");
+    setGoogleLoading(false);
   };
 
   useEffect(() => {
@@ -91,12 +97,12 @@ function LoginCard() {
             type="button"
             disabled={loading}
             onClick={handleSubmit}
-            className={`px-6 py-2 mt-7 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
+            className={`relative px-6 py-2 mt-7 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
           >
             {loading &&
-              <Spinner className="absolute left-10 w-10 h-6 bottom-[31px]" color="white" />
+              <Spinner className="absolute left-5 w-10 h-6 bottom-[6px]" color="white" />
             }
-            Save Changes
+            Sign in
           </button>
 
         </form>
@@ -105,7 +111,7 @@ function LoginCard() {
           Don’t have an account?{" "}
           <button
             onClick={() => dispatch(showSignUpCard())}
-            className="text-blue-500 underline"
+            className="relative text-blue-500 underline"
           >
             Signup
           </button>
@@ -113,9 +119,13 @@ function LoginCard() {
 
         <button
           type="button"
+          disabled={googleLoading}
           onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-2 my-3 bg-white border border-gray-300 py-2.5 rounded-md text-gray-800"
+          className="relative w-full flex items-center justify-center gap-2 my-3 h-10 bg-white border border-gray-300 py-2.5 rounded-md text-gray-800"
         >
+          {googleLoading &&
+            <Spinner className="absolute left-5 w-10 h-6 bottom-[7px]" color="white" />
+          }
           <img
             className="h-4 w-4"
             src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleFavicon.png"

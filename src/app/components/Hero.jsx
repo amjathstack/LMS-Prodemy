@@ -33,16 +33,16 @@ export default function Hero() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-semibold max-w-lg md:max-w-2xl text-center mt-4 leading-tight md:leading-tight">
-          Build stunning <span className="relative bg-gradient-to-r from-[#00753b] to-[#27AE60] bg-clip-text text-transparent">
-            websites
-          </span> <span className='relative bg-gradient-to-r from-[#00753b] to-[#27AE60] bg-clip-text text-transparent'>with</span> PrebuiltUI.
+          Modern Learning <span className="relative bg-gradient-to-r from-[#00753b] to-[#27AE60] bg-clip-text text-transparent">
+            for
+          </span> <span className='relative bg-gradient-to-r from-[#00753b] to-[#27AE60] bg-clip-text text-transparent'>Growing</span> Teams.
         </h1>
 
-        <p className="max-w-xl text-center text-base my-7">A secure pre-built ui component library for React & HTML with TailwindCSS. Build stunning websites with PrebuiltUI.</p>
+        <p className="max-w-xl text-center text-base my-7">Deliver, manage, and track learning experiences with a flexible LMS designed for scale, performance, and measurable outcomes.</p>
 
         <form onSubmit={onSubmitHandler} className='w-full flex justify-center group'>
           <label className='border border-gray-400 rounded-md p-1 flex items-center w-full max-w-md'>
-            <input onChange={e => setInput(e.target.value)} value={input} type="text" placeholder='type here' className='pl-2 flex-1 outline-none' />
+            <input onChange={e => setInput(e.target.value)} value={input} type="text" placeholder='Type here' className='pl-2 flex-1 outline-none' />
             <button className='bg-[#27AE60] text-white p-3 px-6 rounded-md cursor-pointer'> Search </button>
           </label>
         </form>

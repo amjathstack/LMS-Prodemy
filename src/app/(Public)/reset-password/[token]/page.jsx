@@ -4,7 +4,7 @@ import { Spinner } from "@material-tailwind/react"
 import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function ResetPasswordPage() {
 
@@ -13,6 +13,7 @@ export default function ResetPasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const router = useRouter()
 
     const handleSubmit = async () => {
 
@@ -27,11 +28,16 @@ export default function ResetPasswordPage() {
         try {
 
             const response = await axios.post("/api/reset-password", { token, password }, { headers: { "Content-Type": "application/json" } });
-            toast(response.data.message);
+            if (response.data.message && response.data.status) {
+                toast(response.data.message);
+                router.push('/');
+            } else {
+                toast(response.data.message);
+            }
 
         } catch (error) {
 
-            console.error(error.message)
+            console.error(error.message);
 
         }
 

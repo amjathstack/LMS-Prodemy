@@ -23,7 +23,7 @@ export async function POST(req) {
 
     if (!user) {
         return NextResponse.json(
-            { status:false, message:"Token invalid or expired" }
+            { status: false, message: "Token invalid or expired" }
         );
     }
 
@@ -33,5 +33,5 @@ export async function POST(req) {
 
     await user.save();
 
-    return NextResponse.json({ message: "Password updated successfully" });
+    return NextResponse.json({ status: true, message: "Password updated successfully" });
 }
