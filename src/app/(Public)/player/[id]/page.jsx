@@ -95,7 +95,7 @@ export default function CoursePage({ params }) {
                             <span>• English</span>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col items-end sm:flex-row items-center gap-2">
                         <button
                             onClick={handlePrev}
                             disabled={lctIndex === 0}
@@ -118,7 +118,7 @@ export default function CoursePage({ params }) {
                 <div className="max-w-[800px] lg:col-span-2">
                     <iframe
                         title="course-video"
-                        className="w-full h-[420px]"
+                        className="w-full h-[250px] sm:h-[420px]"
                         src={(() => {
                             try {
                                 new URL(activeItem?.videoUrl);

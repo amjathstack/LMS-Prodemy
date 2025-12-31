@@ -131,7 +131,7 @@ export default function CoursesPage() {
                             </table>
                         </div>
                         <div className="block lg:hidden">
-                            {instructorCoursesList.map((course, index) => (
+                            {instructorCoursesList?.map((course, index) => (
                                 <div key={index} className="mt-2 border border-gray-300 p-4 space-y-3">
 
                                     <div className="flex items-center gap-3">

@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let URL = "http://localhost:3000/api/instructor/course";
+let URL = "/instructor/course";
 
 export const fetchInstructorCourses = createAsyncThunk(
     "courses/fetchInstructorCourses",

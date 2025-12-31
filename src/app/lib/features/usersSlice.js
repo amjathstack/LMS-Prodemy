@@ -4,21 +4,7 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 
-let URL = "http://localhost:3000/api/user"
-
-// export const fetch = createAsyncThunk(
-//     "courses/fetchCourses",
-//     async () => {
-//         try {
-//             const response = await axios.get(URL);
-//             if (response.status) {
-//                 return response.data.message
-//             }
-//         } catch (error) {
-//             return console.error(error.message);
-//         }
-//     }
-// )
+let URL = "/api/user"
 
 export const createUser = createAsyncThunk(
     "users/createUser",
@@ -68,7 +54,7 @@ export const getEnrolledStudents = createAsyncThunk(
     "users/getEnrolledStudents",
     async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/instructor/student");
+            const response = await axios.get("/api/instructor/student");
             if (response.data.status) {
                 return response.data.message
             }

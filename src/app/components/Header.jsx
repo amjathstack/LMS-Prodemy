@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showLoginCard } from "../lib/features/componentStatusSlice";
 import { useSession } from "next-auth/react";
@@ -13,6 +13,11 @@ export default function Header() {
 
   const dispatch = useDispatch();
   const { data: session } = useSession();
+
+  const handleLoginBtn = () => {
+    setMenuOpen(false);
+    dispatch(showLoginCard());
+  }
 
   return (
     <header className="h-full max-h-30 w-full sticky top-0 z-50">
@@ -85,13 +90,13 @@ export default function Header() {
             <a href="#" onClick={() => scrollTo(0, 0)}>Contact</a>
             {
               !session ?
-              <button
-                onClick={() => dispatch(showLoginCard())}
-                className="cursor-pointer px-8 py-2 bg-[#27AE60] hover:bg-[#27AE60]/90 transition text-white rounded-full"
-              >
-                Login
-              </button>
-              : <h1>Hi!, {session?.user?.name || "anonymous"}</h1>
+                <button
+                  onClick={() => handleLoginBtn()}
+                  className="cursor-pointer px-8 py-2 bg-[#27AE60] hover:bg-[#27AE60]/90 transition text-white rounded-full"
+                >
+                  Login
+                </button>
+                : <h1>Hi!, {session?.user?.name || "anonymous"}</h1>
             }
 
             <X onClick={() => setMenuOpen(false)} className="absolute top-5  right-5" />

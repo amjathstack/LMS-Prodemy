@@ -45,6 +45,10 @@ export default function CourseDetailsPage({ params }) {
     fetchCourse()
   }, [])
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   if (loading) {
     return <LoadingPage />
   }
