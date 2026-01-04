@@ -23,10 +23,11 @@ export default function Sidebar({ page, setPage, showSideBar, setShowSideBar }) 
       setPage("back")
       router.push("/")
     }
+    setShowSideBar(false)
   }
 
   return (
-    <aside className={`fixed ${showSideBar ? `block` : `hidden`} lg:flex h-[100%] w-64 top-0 left-0 bg-white shadow-sm transition-all duration-300 flex-col`}>
+    <aside className={`fixed ${showSideBar ? `block` : `hidden`} lg:flex h-[100%] w-64 top-0 left-0 bg-white shadow-sm transition-all duration-300 flex-col z-50`}>
       <div className="flex h-15 items-center gap-4 p-4 border-b border-gray-300">
         <button className="ml-2 lg:hidden cursor-pointer" onClick={() => setShowSideBar(false)}>
           <MenuIcon className="w-5 h-5" />
