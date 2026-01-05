@@ -6,7 +6,6 @@ import { updateUser } from "@/app/lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
-import { useSession } from "next-auth/react";
 
 export default function UserProfileEditCard({
     name: initialName,
@@ -15,7 +14,6 @@ export default function UserProfileEditCard({
 }) {
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.users);
-    const { data: session, update } = useSession();
 
     const [name, setName] = useState(initialName || "");
     const [title, setTitle] = useState("");
@@ -29,32 +27,41 @@ export default function UserProfileEditCard({
 
     const fileRef = useRef(null);
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
 
         if (role === "none") {
             return toast("Select the role")
         }
 
-        try {
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("role", role);
 
-            if (profileImg) {
-                formData.append("profileImage", profileImg);
-            }
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("role", role);
 
-            if (role === "Instructor") {
-                formData.append("title", title);
-                formData.append("bio", bio);
-            }
-
-            dispatch(updateUser(formData));
-            
-            setTrackSubmit(true);
-        } catch (error) {
-            toast.error(error.message);
+        if (profileImg) {
+            formData.append("profileImage", profileImg);
         }
+
+        if (role === "Instructor") {
+            formData.append("title", title);
+            formData.append("bio", bio);
+        }
+
+        const updatedUser = await dispatch(updateUser(formData));
+
+
+        await update({
+            name: updatedUser.name,
+            role: updatedUser.role,
+            profileImage: updatedUser.profileImage,
+            title: updatedUser.title || undefined,
+            bio: updatedUser.bio || undefined,
+        });
+
+
+
+        setTrackSubmit(true);
+
     };
 
     useEffect(() => {

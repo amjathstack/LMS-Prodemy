@@ -39,7 +39,6 @@ export const updateUser = createAsyncThunk(
                 return response.data.message
             }
 
-
         } catch (error) {
             return console.error(error);
         }
