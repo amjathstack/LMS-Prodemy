@@ -23,29 +23,18 @@ export default function PublicLayout({ children }) {
     async function updateSession() {
 
         if (!session?.user) return;
-        if (session?.user?.role === "Learner") {
-            await update({
-                ...session,
-                user: {
-                    ...session.user,
-                    name: user?.name,
-                    role: user?.role,
-                    profileImage: user?.profileImage,
-                }
-            });
-        } else {
-            await update({
-                ...session,
-                user: {
-                    ...session.user,
-                    name: user?.name,
-                    role: user?.role,
-                    profileImage: user?.profileImage,
-                    title: user?.title,
-                    bio: user?.bio
-                }
-            });
-        }
+
+        await update({
+            ...session,
+            user: {
+                ...session.user,
+                name: user?.name,
+                role: user?.role,
+                profileImage: user?.profileImage,
+                title: user?.title || undefined,
+                bio: user?.bio || undefined
+            }
+        });
 
         dispatch(falseUserUpdateLoading());
     }

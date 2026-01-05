@@ -6,6 +6,7 @@ import { updateUser } from "@/app/lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 
 export default function UserProfileEditCard({
     name: initialName,
@@ -14,6 +15,7 @@ export default function UserProfileEditCard({
 }) {
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.users);
+    const { data: session, update } = useSession();
 
     const [name, setName] = useState(initialName || "");
     const [title, setTitle] = useState("");
@@ -27,7 +29,7 @@ export default function UserProfileEditCard({
 
     const fileRef = useRef(null);
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
 
         if (role === "none") {
             return toast("Select the role")
@@ -47,9 +49,8 @@ export default function UserProfileEditCard({
                 formData.append("bio", bio);
             }
 
-            console.log(role)
-
             dispatch(updateUser(formData));
+            
             setTrackSubmit(true);
         } catch (error) {
             toast.error(error.message);
