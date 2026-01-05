@@ -5,6 +5,7 @@ import { hideProfileEditCard } from "@/app/lib/features/componentStatusSlice";
 import { updateUser } from "@/app/lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
+import { Spinner } from "@material-tailwind/react";
 
 export default function UserProfileEditCard({
     name: initialName,

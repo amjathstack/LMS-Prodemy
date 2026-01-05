@@ -33,8 +33,6 @@ export const updateUser = createAsyncThunk(
     "users/updateUser",
     async (formData) => {
         try {
-
-            console.log("Done")
             const response = await axios.put(URL, formData);
             if (response.data.status) {
                 console.log(response.data.message)

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { showLoginCard } from "../lib/features/componentStatusSlice";
 import { useSession } from "next-auth/react";
