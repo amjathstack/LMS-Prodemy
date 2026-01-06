@@ -35,7 +35,6 @@ export const updateUser = createAsyncThunk(
         try {
             const response = await axios.put(URL, formData);
             if (response.data.status) {
-                console.log(response.data.message)
                 return response.data.message
             }
 

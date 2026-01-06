@@ -102,6 +102,7 @@ export const authOptions = {
       if (trigger === "update" && session?.user) {
         token.name = session.user.name;
         token.profileImage = session.user.profileImage;
+        token.role = session.user.role;
         token.bio = session.user.bio;
         token.title = session.user.title;
       }

@@ -6,6 +6,7 @@ import { updateUser } from "@/app/lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 
 export default function UserProfileEditCard({
     name: initialName,
@@ -14,6 +15,7 @@ export default function UserProfileEditCard({
 }) {
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.users);
+    const { data: session, update } = useSession();
 
     const [name, setName] = useState(initialName || "");
     const [title, setTitle] = useState("");
@@ -33,7 +35,6 @@ export default function UserProfileEditCard({
             return toast("Select the role")
         }
 
-
         const formData = new FormData();
         formData.append("name", name);
         formData.append("role", role);
@@ -47,16 +48,7 @@ export default function UserProfileEditCard({
             formData.append("bio", bio);
         }
 
-        const updatedUser = await dispatch(updateUser(formData));
-
-
-        await update({
-            name: updatedUser.name,
-            role: updatedUser.role,
-            profileImage: updatedUser.profileImage,
-            title: updatedUser.title || undefined,
-            bio: updatedUser.bio || undefined,
-        });
+        dispatch(updateUser(formData));
 
 
 
