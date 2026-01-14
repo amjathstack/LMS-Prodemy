@@ -14,8 +14,6 @@ export async function POST(req) {
 
     await connectDB();
 
-    console.log(hashedToken)
-
     const user = await userModel.findOne({
         resetPasswordToken: hashedToken,
         resetPasswordExpires: { $gt: Date.now() }

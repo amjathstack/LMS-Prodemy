@@ -31,10 +31,10 @@ export default function EnrollCard({ course, isEnrolled }) {
                 formData.append("lessons", JSON.stringify(course?.lessons));
 
                 try {
-                    const response = await axios.post("/api/enroll-course", formData);
-                    if (response.data.status) {
-                        router.push(`/enrolled-player/${course?._id}`);
-                    };
+                    const response = await axios.post("/api/stripe", formData);
+                    if(response.data.status){
+                        window.location.href = response.data.url
+                    }
                 } catch (error) {
                     console.error(error);
                 }

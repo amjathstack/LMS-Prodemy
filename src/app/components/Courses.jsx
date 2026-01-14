@@ -19,6 +19,7 @@ export default function Courses() {
 
   async function fetchCourseList() {
     const response = await axios.get("/api/course");
+    console.log(response.data)
     if (response.data.status) {
       setCourseList(response.data.message)
     }

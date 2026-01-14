@@ -22,8 +22,6 @@ export async function POST(req) {
         .update(resetToken)
         .digest("hex");
 
-    console.log(resetToken);
-
     user.resetPasswordToken = hashToken;
     user.resetPasswordExpires = Date.now() + 15 * 60 * 1000
     await user.save();

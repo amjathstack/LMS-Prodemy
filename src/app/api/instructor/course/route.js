@@ -56,8 +56,6 @@ export async function POST(request) {
             learningPoints,
         });
 
-        console.log('done')
-
         return NextResponse.json({ status: true, message: response });
 
     } catch (error) {
