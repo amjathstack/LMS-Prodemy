@@ -31,7 +31,7 @@ export default function EnrollCard({ course, isEnrolled }) {
                 formData.append("lessons", JSON.stringify(course?.lessons));
 
                 try {
-                    const response = await axios.post("/api/stripe", formData);
+                    const response = await axios.post("/api/order/stripe", formData);
                     if (response.data.status) {
                         window.location.href = response.data.url
                     }

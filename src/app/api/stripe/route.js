@@ -43,13 +43,26 @@ export async function POST(req) {
     });
 
     if (!existingEnrollment) {
+      const course = await courseModel.findById(courseId);
+
+      if (!course) {
+        return new NextResponse("Course not found", { status: 404 });
+      }
+
       await enrolledCourseModel.create({
+        instructorId: course.instructorId,
         studentId: userId,
-        courseId: courseId,
-        paymentIntentId: session.payment_intent,
-        amountPaid: session.amount_total / 100,
-        currency: session.currency,
-        status: "paid",
+        courseId: course._id,
+
+        title: course.title,
+        description: course.description,
+        thumbnail: course.thumbnail,
+        price: course.price,
+        language: course.language,
+
+        lessons: course.lessons,
+        learningPoints: course.learningPoints,
+        notes: course.notes,
       });
 
       await courseModel.findByIdAndUpdate(courseId, {
@@ -57,6 +70,8 @@ export async function POST(req) {
       });
     }
   }
+
+  console.log('Working!')
 
   return NextResponse.json({ received: true });
 }
