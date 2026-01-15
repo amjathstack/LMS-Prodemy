@@ -32,7 +32,7 @@ export default function EnrollCard({ course, isEnrolled }) {
 
                 try {
                     const response = await axios.post("/api/stripe", formData);
-                    if(response.data.status){
+                    if (response.data.status) {
                         window.location.href = response.data.url
                     }
                 } catch (error) {
