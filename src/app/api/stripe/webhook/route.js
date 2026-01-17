@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import connectDB from "../../../../config/connectDB";
@@ -14,6 +16,8 @@ export async function POST(req) {
 
   let event;
 
+  console.log("Webhook Working...")
+
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -28,6 +32,10 @@ export async function POST(req) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
+    if (session.payment_status !== "paid") {
+      return NextResponse.json({ received: true });
+    }
+
     const userId = session.metadata?.userId;
     const courseId = session.metadata?.courseId;
 
@@ -39,27 +47,22 @@ export async function POST(req) {
 
     const existingEnrollment = await enrolledCourseModel.findOne({
       studentId: userId,
-      courseId: courseId,
+      courseId,
     });
 
     if (!existingEnrollment) {
       const course = await courseModel.findById(courseId);
-
-      if (!course) {
-        return new NextResponse("Course not found", { status: 404 });
-      }
+      if (!course) return new NextResponse("Course not found", { status: 404 });
 
       await enrolledCourseModel.create({
         instructorId: course.instructorId,
         studentId: userId,
         courseId: course._id,
-
         title: course.title,
         description: course.description,
         thumbnail: course.thumbnail,
         price: course.price,
         language: course.language,
-
         lessons: course.lessons,
         learningPoints: course.learningPoints,
         notes: course.notes,
@@ -70,8 +73,6 @@ export async function POST(req) {
       });
     }
   }
-
-  console.log('Working!')
 
   return NextResponse.json({ received: true });
 }
