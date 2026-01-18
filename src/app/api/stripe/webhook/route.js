@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import connectDB from "../../../../config/connectDB";
+import connectDB from "../../../../../config/connectDB";
 import enrolledCourseModel from "../../../../../models/EnrolledCourse";
 import courseModel from "../../../../../models/Course";
 
