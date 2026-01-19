@@ -18,12 +18,19 @@ export default function Courses() {
   ];
 
   async function fetchCourseList() {
-    const response = await axios.get("/api/course");
-    console.log(response.data)
-    if (response.data.status) {
-      setCourseList(response.data.message)
+    try {
+      setLoading(true);
+
+      const response = await axios.get("/api/course")
+
+      if (response.data?.status) {
+        setCourseList(response.data.message);
+      }
+    } catch (error) {
+      console.error("Failed to fetch courses:", error)
+    } finally {
+      setLoading(false);
     }
-    setLoading(false)
   }
 
   useEffect(() => {
