@@ -5,6 +5,7 @@ import { ImageDown, LockIcon, ViewIcon, Trash, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function AddCoursePage() {
 
@@ -107,6 +108,7 @@ export default function AddCoursePage() {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
+            toast("Please make sure valid Inputs");
             return;
         } else {
             setErrors({});
@@ -123,8 +125,6 @@ export default function AddCoursePage() {
         data.append("notes", formData.notes);
         data.append("learningPoints", JSON.stringify(formData.learningPoints));
         data.append("lessons", JSON.stringify(formData.lessons));
-
-        console.log(data.category)
 
         dispatch(addCourse(data));
         dispatch(hideCourseAddForm());
@@ -385,7 +385,6 @@ export default function AddCoursePage() {
                                     onChange={(e) =>
                                         handleChange("thumbnail", e.target.files[0])
                                     }
-                                    required
                                 />
                             </label>
 

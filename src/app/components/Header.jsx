@@ -5,7 +5,7 @@ import { showLoginCard } from "../lib/features/componentStatusSlice";
 import { useSession } from "next-auth/react";
 import React from "react";
 import UserMenu from "./UserMenu";
-import { Menu, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 
 export default function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -44,11 +44,18 @@ export default function Header() {
                     onClick={() => setShowUserMenu(true)}
                     className="h-9 w-9 cursor-pointer"
                   >
-                    <img
-                      className="h-full w-full border border-gray-300 rounded-full object-cover object-center"
-                      src={session?.user?.profileImage}
-                      alt={session?.user?.name || "User"}
-                    />
+                    {
+                      session?.user?.profileImage
+                        ? <img
+                          className="h-full w-full border border-gray-300 rounded-full object-cover object-center"
+                          src={session?.user?.profileImage}
+                          alt={session?.user?.name || "User"}
+                        />
+                        : <div className="h-full w-full flex items-center justify-center border border-gray-300 rounded-full object-cover object-center">
+                          <User className="text-gray-600 w-7" />
+                        </div>
+                    }
+
                   </div>
                   <UserMenu
                     name={session?.user?.name}

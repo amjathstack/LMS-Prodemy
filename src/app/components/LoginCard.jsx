@@ -20,6 +20,7 @@ function LoginCard() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const result = await signIn("credentials", {
       redirect: false,
       email,
@@ -41,7 +42,6 @@ function LoginCard() {
   const handleGoogleLogin = () => {
     setGoogleLoading(true);
     signIn("google");
-    setGoogleLoading(false);
   };
 
   useEffect(() => {
@@ -95,7 +95,7 @@ function LoginCard() {
 
           <button
             type="button"
-            disabled={loading}
+            disabled={loading || googleLoading}
             onClick={handleSubmit}
             className={`relative px-6 py-2 mt-7 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
           >
@@ -119,12 +119,12 @@ function LoginCard() {
 
         <button
           type="button"
-          disabled={googleLoading}
+          disabled={googleLoading || loading}
           onClick={handleGoogleLogin}
           className="relative w-full flex items-center justify-center gap-2 my-3 h-10 bg-white border border-gray-300 py-2.5 rounded-md text-gray-800"
         >
           {googleLoading &&
-            <Spinner className="absolute left-5 w-10 h-6 bottom-[7px]" color="white" />
+            <Spinner className="absolute left-5 w-10 h-6 bottom-[7px]" color="black" />
           }
           <img
             className="h-4 w-4"

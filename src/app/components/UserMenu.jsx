@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { showProfileEditCard } from "../lib/features/componentStatusSlice";
+import { User } from "lucide-react";
 
 
 
@@ -54,11 +55,17 @@ export default function UserMenu({ name, profileImage, role, showUserMenu, setSh
                 <div className="py-3 px-4">
                     <div className="flex items-center gap-3">
                         <div className="relative h-10 w-10">
-                            <img
-                                className="h-full w-full rounded-full object-cover ring ring-white border border-gray-300"
-                                src={profileImage}
-                                alt={name}
-                            />
+                            {
+                                profileImage
+                                    ? <img
+                                        className="h-full w-full border border-gray-300 rounded-full object-cover object-center"
+                                        src={profileImage}
+                                        alt={name || "User"}
+                                    />
+                                    : <div className="h-full w-full flex items-center justify-center border border-gray-300 rounded-full object-cover object-center">
+                                        <User className="text-gray-600 w-7" />
+                                    </div>
+                            }
                             <span className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white" />
                         </div>
                         <div className="text-sm">
