@@ -191,7 +191,7 @@ function SignUpCard() {
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="e.g. Senior Frontend Engineer"
                                     required
-                                    className="w-full px-3 py-2 border rounded-sm focus:outline-none"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:outline-none"
                                 />
                             </div>
 
@@ -205,7 +205,7 @@ function SignUpCard() {
                                     onChange={(e) => setBio(e.target.value)}
                                     placeholder="Write a short bio about yourself"
                                     required
-                                    className="w-full max-h-30 px-3 py-2 border rounded-sm focus:outline-none"
+                                    className="w-full max-h-30 px-3 py-2 border border-gray-300 rounded-sm focus:outline-none"
                                 />
                             </div>
 
