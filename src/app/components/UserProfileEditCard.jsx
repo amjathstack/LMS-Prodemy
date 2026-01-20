@@ -6,7 +6,7 @@ import { updateUser } from "@/app/lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
-import { useSession } from "next-auth/react";
+import User from '../assets/user.svg'
 
 export default function UserProfileEditCard({
     name: initialName,
@@ -15,7 +15,6 @@ export default function UserProfileEditCard({
 }) {
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.users);
-    const { data: session, update } = useSession();
 
     const [name, setName] = useState(initialName || "");
     const [title, setTitle] = useState("");
@@ -84,15 +83,29 @@ export default function UserProfileEditCard({
                         onChange={(e) => setProfileImg(e.target.files[0])}
                     />
 
-                    <img
-                        src={
-                            preview ||
-                            "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200"
-                        }
-                        alt="Profile Avatar"
-                        className="w-24 h-24 rounded-full border border-gray-200 my-4 cursor-pointer"
-                        onClick={() => fileRef.current.click()}
-                    />
+                    {
+                        preview
+                            ? <img
+                                src={
+                                    preview
+                                }
+                                alt="Profile Avatar"
+                                className="w-24 h-24 rounded-full border border-gray-200 my-4 cursor-pointer"
+                                onClick={() => fileRef.current.click()}
+                            />
+                            : <div
+                                className="w-24 h-24 flex items-center justify-center rounded-full border border-gray-200 my-4 cursor-pointer"
+                                onClick={() => fileRef.current.click()}
+                            >
+                                <img
+                                    src={
+                                        User
+                                    }
+                                    alt="Profile Avatar"
+                                    className="w-18"
+                                />
+                            </div>
+                    }
 
                     <h2 className="text-2xl font-bold text-gray-800 mb-1">
                         {name || "Your Name"}

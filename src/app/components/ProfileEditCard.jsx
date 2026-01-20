@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { updateUser } from "../lib/features/usersSlice";
 import { useRef } from "react";
 import { Spinner } from "@material-tailwind/react";
+import userdm from "../assets/user.svg"
 
 export default function profileEditCard({ name: initialName, profileImage, role }) {
 
@@ -63,15 +64,31 @@ export default function profileEditCard({ name: initialName, profileImage, role 
                         onChange={(e) => setProfileImg(e.target.files[0])}
                     />
 
-                    <img
-                        src={
-                            preview ||
-                            "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200"
-                        }
-                        alt="Profile Avatar"
-                        className="w-24 h-24 rounded-full border border-gray-200 my-4 cursor-pointer"
-                        onClick={() => fileRef.current.click()}
-                    />
+                    {
+                        preview
+                            ? <img
+                                src={
+                                    preview
+                                }
+                                alt="Profile Avatar"
+                                className="w-24 h-24 rounded-full border border-gray-200 my-4 cursor-pointer"
+                                onClick={() => fileRef.current.click()}
+                            />
+                            : <div
+                                className="w-24 h-24 flex items-center justify-center rounded-full border border-gray-200 my-4 cursor-pointer"
+                                onClick={() => fileRef.current.click()}
+                            >
+                                <img
+                                    src={
+                                        userdm.src
+                                    }
+                                    alt="Profile Avatar"
+                                    className="w-18"
+                                />
+                            </div>
+                    }
+
+
 
                     <h2 className="text-2xl font-bold text-gray-800 mb-1">
                         {name || "Your Name"}
@@ -93,10 +110,10 @@ export default function profileEditCard({ name: initialName, profileImage, role 
                         type="button"
                         disabled={loading}
                         onClick={handleSubmit}
-                        className={`px-6 py-2 mt-7 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${ loading && "cursor-not-allowed" } `}
+                        className={`px-6 py-2 mt-7 w-full transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
                     >
                         {loading &&
-                        <Spinner className="absolute left-10 w-10 h-6 bottom-[31px]" color="white" />
+                            <Spinner className="absolute left-10 w-10 h-6 bottom-[31px]" color="white" />
                         }
                         Save Changes
                     </button>
