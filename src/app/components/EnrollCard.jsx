@@ -13,6 +13,10 @@ export default function EnrollCard({ course, isEnrolled }) {
     const handleBuyBtn = async () => {
         if (session) {
 
+            if(session?.user.role === "none"){
+                return toast("Please Complete your profile!");
+            }
+
             if (session?.user.role === "Instructor") {
                 toast("This account cannot enroll any courses!")
             } else {
