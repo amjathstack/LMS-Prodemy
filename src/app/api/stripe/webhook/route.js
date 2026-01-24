@@ -5,6 +5,7 @@ import Stripe from "stripe";
 import connectDB from "../../../../../config/connectDB";
 import enrolledCourseModel from "../../../../../models/EnrolledCourse";
 import courseModel from "../../../../../models/Course";
+import userModel from "../../../../../models/User";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2023-10-16",
@@ -70,7 +71,12 @@ export async function POST(req) {
       await courseModel.findByIdAndUpdate(courseId, {
         $inc: { studentsCount: 1 },
       });
+      
+      await userModel.findByIdAndUpdate(course.instructorId, { $inc: { earnings:course.price } });
     }
+
+    
+
   }
 
   return NextResponse.json({ received: true });
