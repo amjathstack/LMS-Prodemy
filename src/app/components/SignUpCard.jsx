@@ -29,7 +29,7 @@ function SignUpCard() {
         setLoading(true);
 
         if (!name || !email || !password) {
-            toast("Please fill in all required fields.")
+            toast.error("Please fill in all required fields.")
             return setStep(1);
         }
 
@@ -48,7 +48,7 @@ function SignUpCard() {
             dispatch(createUser(formData));
 
         } catch (error) {
-            alert("Signup failed. Please try again.");
+            toast.error("Signup failed. Please try again.");
         }
 
     };

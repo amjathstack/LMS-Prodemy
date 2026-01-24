@@ -15,10 +15,9 @@ export const createUser = createAsyncThunk(
             if (response.data.status) {
                 const email = formData.get("email");
                 const password = formData.get("password");
-                console.log(email, password);
                 await signIn('credentials', { redirect: false, email, password });
                 if (response.data.status) {
-                    toast(response.data.message);
+                    toast.success(response.data.message);
                 }
             }
         } catch (error) {
