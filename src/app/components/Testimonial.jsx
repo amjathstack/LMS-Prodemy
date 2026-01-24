@@ -11,13 +11,13 @@ const testimonials = [
     name: "James L.",
     course: "Python for Beginners",
     text: "I had zero coding experience, and now I can build real projects confidently. The support from instructors was amazing.",
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+    img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200",
   },
   {
     name: "Maria P.",
     course: "Graphic Design Essentials",
     text: "The design exercises were fun and practical. My portfolio looks professional, and I’m now freelancing full-time!",
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+    img: "https://randomuser.me/api/portraits/men/75.jpg",
   },
 ];
 

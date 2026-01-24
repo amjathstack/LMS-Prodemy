@@ -121,7 +121,7 @@ export default function InstructorProfileEditCard({ name: initialName, profileIm
                     </div>
 
                     <textarea
-                        className="px-2 w-full text-sm outline-none text-gray-500 bg-transparent h-full max-h-30 py-2 border pl-2 rounded border-gray-500/30 w-full max-w-md mt-4"
+                        className="px-2 w-full text-sm outline-none text-gray-500 bg-transparent h-full max-h-[100px] py-2 border pl-2 rounded border-gray-500/30 max-w-md mt-4"
                         type="text"
                         placeholder="Enter your name"
                         value={bio}

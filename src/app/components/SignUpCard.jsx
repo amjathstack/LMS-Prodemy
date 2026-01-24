@@ -16,7 +16,7 @@ function SignUpCard() {
     const [title, setTitle] = useState("");
     const [bio, setBio] = useState("");
 
-    const { data:session } = useSession();
+    const { data: session } = useSession();
 
     const [loading, setLoading] = useState(false);
 
@@ -63,7 +63,7 @@ function SignUpCard() {
     }, [showSignUpStatus]);
 
     useEffect(() => {
-        if(session){
+        if (session) {
             dispatch(hideSignUpCard())
         }
     }, [dispatch, session])
@@ -213,7 +213,7 @@ function SignUpCard() {
                                     onChange={(e) => setBio(e.target.value)}
                                     placeholder="Write a short bio about yourself"
                                     required
-                                    className="w-full max-h-30 px-3 py-2 border border-gray-300 rounded-sm focus:outline-none"
+                                    className="w-full h-full max-h-[100px] px-3 py-2 border border-gray-300 rounded-sm focus:outline-none"
                                 />
                             </div>
 

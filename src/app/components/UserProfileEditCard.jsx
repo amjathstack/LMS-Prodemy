@@ -176,7 +176,7 @@ export default function UserProfileEditCard({
                             </div>
 
                             <textarea
-                                className="w-full max-w-md mt-3 p-2 border rounded border-gray-500/30 text-sm text-gray-600 outline-none resize-none"
+                                className="w-full max-w-md mt-3 p-2 h-full max-h-[100px] border rounded border-gray-500/30 text-sm text-gray-600 outline-none resize-none"
                                 rows={3}
                                 placeholder="Write a short bio about yourself"
                                 value={bio}
