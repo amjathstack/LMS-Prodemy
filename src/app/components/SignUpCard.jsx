@@ -4,6 +4,8 @@ import { hideSignUpCard, showLoginCard } from "../lib/features/componentStatusSl
 import { X } from "lucide-react";
 import { createUser } from "../lib/features/usersSlice";
 import { toast } from "react-toastify";
+import { Spinner } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 
 function SignUpCard() {
     const [step, setStep] = useState(1);
@@ -13,6 +15,8 @@ function SignUpCard() {
     const [role, setRole] = useState("Learner");
     const [title, setTitle] = useState("");
     const [bio, setBio] = useState("");
+
+    const { data:session } = useSession();
 
     const [loading, setLoading] = useState(false);
 
@@ -42,12 +46,10 @@ function SignUpCard() {
             }
 
             dispatch(createUser(formData));
-            dispatch(hideSignUpCard());
+
         } catch (error) {
             alert("Signup failed. Please try again.");
         }
-
-        setLoading(false);
 
     };
 
@@ -59,6 +61,12 @@ function SignUpCard() {
         }
         return () => document.body.classList.remove("body-no-scroll");
     }, [showSignUpStatus]);
+
+    useEffect(() => {
+        if(session){
+            dispatch(hideSignUpCard())
+        }
+    }, [dispatch, session])
 
     return (
         <div className="fixed min-h-screen w-full left-0 top-0 flex items-center justify-center bg-white/70 z-50">
@@ -209,18 +217,20 @@ function SignUpCard() {
                                 />
                             </div>
 
-                            <div className="flex gap-2">
+                            <div className="flex w-full gap-2">
                                 <button
                                     type="button"
                                     onClick={() => setStep(1)}
-                                    className="relative flex-1 border border-gray-300 px-6 py-2 mt-3 rounded-sm hover:bg-gray-50"
+                                    className="relative border border-gray-300 px-6 py-2 mt-3 rounded-sm hover:bg-gray-50"
                                 >
                                     Back
                                 </button>
                                 <button
                                     type="submit"
-                                    className={`relative px-6 py-2 mt-3 transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
-                                >
+                                    className={`relative flex-1 px-6 py-2 mt-3 transition bg-[#27AE60] hover:bg-[#27AE60]/90 rounded text-white text-sm font-medium cursor pointer ${loading && "cursor-not-allowed"} `}
+                                >{loading &&
+                                    <Spinner className="absolute left-5 w-10 h-6 bottom-[6px]" color="white" />
+                                    }
                                     Sign Up
                                 </button>
                             </div>

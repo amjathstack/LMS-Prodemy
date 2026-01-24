@@ -69,6 +69,7 @@ const usersSlice = createSlice({
     initialState: {
         user: null,
         loading: false,
+        userCreateLoading: false,
         enrolledStudents: [],
     },
 
@@ -85,6 +86,19 @@ const usersSlice = createSlice({
             .addCase(updateUser.pending, (state) => {
                 state.loading = true
             })
+
+
+            .addCase(createUser.fulfilled, (state, action) => {
+                state.user = action.payload
+                state.userCreateLoading = false
+            })
+            .addCase(createUser.pending, (state) => {
+                state.userCreateLoading = true
+            })
+            .addCase(createUser.rejected, (state) => {
+                state.userCreateLoading = false
+            })
+
 
             .addCase(getEnrolledStudents.fulfilled, (state, action) => {
                 state.enrolledStudents = action.payload
