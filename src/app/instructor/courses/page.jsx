@@ -31,6 +31,10 @@ export default function CoursesPage() {
         dispatch(fetchInstructorCourses());
     }, [dispatch]);
 
+    useEffect(() => {
+        console.log(instructorCoursesList);
+    })
+
     if (loading) return (
 
 
@@ -101,7 +105,9 @@ export default function CoursesPage() {
                                                 </td>
 
                                                 <td className="px-4 py-2 whitespace-nowrap">
-                                                    {course.rating ? `⭐ ${course.rating}` : "No ratings yet"}
+                                                    {course.comments?.length > 0 ? `⭐ ${(
+                                                        course.comments?.reduce((sum, c) => sum + c?.rating, 0) / course?.comments.length
+                                                    ).toFixed(1)}` : "No ratings yet"}
                                                 </td>
 
                                                 <td className="px-4 py-2">
