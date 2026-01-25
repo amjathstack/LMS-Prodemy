@@ -43,6 +43,7 @@ function LoginCard() {
   const handleGoogleLogin = () => {
     setGoogleLoading(true);
     signIn("google");
+    router.push('/')
   };
 
   useEffect(() => {

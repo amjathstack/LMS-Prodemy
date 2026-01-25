@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
 import User from '../assets/user.svg'
+import { useRouter } from "next/navigation";
 
 export default function UserProfileEditCard({
     name: initialName,
@@ -15,6 +16,7 @@ export default function UserProfileEditCard({
 }) {
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.users);
+    const router = useRouter();
 
     const [name, setName] = useState(initialName || "");
     const [title, setTitle] = useState("");
@@ -49,7 +51,7 @@ export default function UserProfileEditCard({
 
         dispatch(updateUser(formData));
 
-
+        router.push('/')
 
         setTrackSubmit(true);
 

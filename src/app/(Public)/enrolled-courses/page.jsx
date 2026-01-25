@@ -27,7 +27,7 @@ export default function MyCoursesPage() {
 
       <main className="py-6">
         <div className="w-full flex items-center justify-center">
-          <div className="grid gap-3 sm:gap-7 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <div className="w-full grid gap-10 sm:gap-7 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {!isLoading && Array.isArray(enrolledCourses) && enrolledCourses.length > 0 &&
               enrolledCourses.map((course) => (
                 <EnrolledCourseCard key={course._id} course={course} />
