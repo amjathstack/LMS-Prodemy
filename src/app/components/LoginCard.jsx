@@ -29,7 +29,7 @@ function LoginCard() {
     });
 
     if (result?.error) {
-      toast.error(result.error);
+      toast.error("Invalid email or password");
       setLoading(false);
       return;
     }
