@@ -14,11 +14,11 @@ export default function EnrollCard({ course, isEnrolled }) {
         if (session) {
 
             if (session?.user.role === "none") {
-                return toast("Please Complete your profile!");
+                return toast.error("Please Complete your profile!");
             }
 
             if (session?.user.role === "Instructor") {
-                toast("This account cannot enroll any courses!")
+                toast.error("This account cannot enroll any courses!")
             } else {
 
                 const formData = new FormData();
@@ -48,7 +48,7 @@ export default function EnrollCard({ course, isEnrolled }) {
             }
 
         } else {
-            return toast("You have to login enroll the courses.")
+            return toast.error("Need to login!")
         }
     }
 
