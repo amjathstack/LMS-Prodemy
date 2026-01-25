@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideLoginCard, showSignUpCard } from "../lib/features/componentStatusSlice";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
+import { Eye, EyeClosedIcon, X } from "lucide-react";
 import { Spinner } from "@material-tailwind/react";
 
 function LoginCard() {
@@ -14,6 +14,7 @@ function LoginCard() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -78,14 +79,22 @@ function LoginCard() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
-            className="w-full bg-transparent border mt-1 border-gray-300 outline-none rounded-md py-2.5 px-4"
-            type="password"
-            placeholder="Enter your password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className="w-full bg-transparent border mt-1 border-gray-300 outline-none rounded-md py-2.5 px-4"
+              type={showPassword ? `text` : `password`}
+              placeholder="Enter your password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {
+              showPassword
+                ? <Eye onClick={() => setShowPassword(false)} className="absolute w-4 h-4 right-5 bottom-[14px] text-gray-500" />
+                : <EyeClosedIcon onClick={() => setShowPassword(true)} className="absolute w-4 h-4 right-5 bottom-[14px] text-gray-500" />
+            }
+          </div>
+
 
           <div className="text-right py-4">
             <a className="text-blue-600 underline" href="/send-email">

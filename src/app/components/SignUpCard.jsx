@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideSignUpCard, showLoginCard } from "../lib/features/componentStatusSlice";
-import { X } from "lucide-react";
+import { Eye, EyeClosedIcon, X } from "lucide-react";
 import { createUser } from "../lib/features/usersSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 
 function SignUpCard() {
+
     const [step, setStep] = useState(1);
+    const [showPassword, setShowPassword] = useState(false);
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -120,12 +123,12 @@ function SignUpCard() {
                                 />
                             </div>
 
-                            <div>
+                            <div className="relative">
                                 <label className="block text-gray-700 mb-2" htmlFor="password">
                                     Password
                                 </label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? `text` : `password`}
                                     id="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -133,6 +136,12 @@ function SignUpCard() {
                                     required
                                     className="w-full bg-transparent border border-gray-300 outline-none rounded-md py-2.5 px-4"
                                 />
+                                {
+                                    showPassword
+                                        ? <Eye onClick={() => setShowPassword(false)} className="absolute w-4 h-4 right-5 bottom-[12px] text-gray-500" />
+                                        : <EyeClosedIcon onClick={() => setShowPassword(true)} className="absolute w-4 h-4 right-5 bottom-[12px] text-gray-500" />
+                                }
+
                             </div>
 
                             <div>

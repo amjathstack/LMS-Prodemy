@@ -5,34 +5,39 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Eye, EyeClosedIcon } from "lucide-react";
 
 export default function ResetPasswordPage() {
 
     const { token } = useParams();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const router = useRouter()
 
     const handleSubmit = async () => {
 
+        if (!password || !confirmPassword) {
+            return toast.error("Please fill the required feilds")
+        }
+
         if (password !== confirmPassword) {
-            return toast("Password no Matches")
+            return toast.error("Password no Matches")
         }
 
         setLoading(true)
-
-        console.log(token)
 
         try {
 
             const response = await axios.post("/api/reset-password", { token, password }, { headers: { "Content-Type": "application/json" } });
             if (response.data.message && response.data.status) {
-                toast(response.data.message);
+                toast.success(response.data.message);
                 router.push('/');
             } else {
-                toast(response.data.message);
+                toast.error(response.data.message);
             }
 
         } catch (error) {
@@ -57,23 +62,38 @@ export default function ResetPasswordPage() {
 
                 <form>
 
-                    <input
-                        className="w-full bg-transparent border my-3 border-gray-300 outline-none rounded-md py-2.5 px-4"
-                        type="password"
-                        placeholder="New password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                        <input
+                            className="w-full bg-transparent border my-3 border-gray-300 outline-none rounded-md py-2.5 px-4"
+                            type={showPassword ? `text` : `password`}
+                            placeholder="New password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        {
+                            showPassword
+                                ? <Eye onClick={() => setShowPassword(false)} className="absolute w-4 h-4 right-5 bottom-[25px] text-gray-500" />
+                                : <EyeClosedIcon onClick={() => setShowPassword(true)} className="absolute w-4 h-4 right-5 bottom-[25px] text-gray-500" />
+                        }
+                    </div>
 
-                    <input
-                        className="w-full bg-transparent border my-3 border-gray-300 outline-none rounded-md py-2.5 px-4"
-                        type="password"
-                        placeholder="Confirm password"
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                        <input
+                            className="w-full bg-transparent border my-3 border-gray-300 outline-none rounded-md py-2.5 px-4"
+                            type={showConfirmPassword ? `text` : `password`}
+                            placeholder="Confirm password"
+                            required
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        {
+                            showConfirmPassword
+                                ? <Eye onClick={() => setShowConfirmPassword(false)} className="absolute w-4 h-4 right-5 bottom-[25px] text-gray-500" />
+                                : <EyeClosedIcon onClick={() => setShowConfirmPassword(true)} className="absolute w-4 h-4 right-5 bottom-[25px] text-gray-500" />
+                        }
+                    </div>
+
 
                     <button
                         type="button"
