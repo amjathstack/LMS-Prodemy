@@ -22,6 +22,7 @@ export async function POST(request) {
         const data = Object.fromEntries(formData.entries());
 
         const price = Number(data.price);
+        const offer = Number(data.offer);
 
         if (!price || price <= 0) {
             return NextResponse.json(
@@ -29,6 +30,11 @@ export async function POST(request) {
                 { status: 400 }
             );
         }
+
+        const discountedAmount =
+            price - (price * (offer || 0)) / 100;
+
+        const unit_amount = Math.round(discountedAmount * 100);
 
         const checkoutSession = await stripe.checkout.sessions.create({
             mode: "payment",
@@ -40,7 +46,7 @@ export async function POST(request) {
                         product_data: {
                             name: data.title,
                         },
-                        unit_amount: price * 100,
+                        unit_amount: unit_amount,
                     },
                     quantity: 1,
                 },

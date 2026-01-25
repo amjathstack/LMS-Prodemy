@@ -13,7 +13,7 @@ export default function EnrollCard({ course, isEnrolled }) {
     const handleBuyBtn = async () => {
         if (session) {
 
-            if(session?.user.role === "none"){
+            if (session?.user.role === "none") {
                 return toast("Please Complete your profile!");
             }
 
@@ -28,11 +28,14 @@ export default function EnrollCard({ course, isEnrolled }) {
                 formData.append("title", course?.title);
                 formData.append("description", course?.description);
                 formData.append("price", course?.price);
+                formData.append("offer", course?.offer || 0);
                 formData.append("language", course?.language);
                 formData.append("thumbnail", course?.thumbnail);
                 formData.append("notes", course?.notes);
                 formData.append("learningPoints", JSON.stringify(course?.learningPoints));
                 formData.append("lessons", JSON.stringify(course?.lessons));
+
+                console.log(course.offer)
 
                 try {
                     const response = await axios.post("/api/order/stripe", formData);
