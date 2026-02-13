@@ -83,7 +83,11 @@ export default function CoursePage({ params }) {
 
     useEffect(() => {
         fetchEnrolledCourse()
-    }, [id])
+    }, [id]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, []);
 
     if (loading) {
         return <LoadingPage />

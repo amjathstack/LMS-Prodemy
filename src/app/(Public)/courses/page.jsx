@@ -14,9 +14,12 @@ export default function CoursesPage() {
   const { data: courses, isLoading } = useQuery({
     queryKey: ["courses"],
     queryFn: async () => {
-      const response = await axios.get("/api/course");
-      return response.data.message
-    }
+      const res = await axios.get("/api/course");
+      return res.data.message;
+    },
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false
   });
 
   const filteredCourses = Array.isArray(courses) && courses?.filter((course) => {
@@ -32,6 +35,10 @@ export default function CoursesPage() {
 
     return matchesSearch && matchesCategory && matchesLanguage;
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   if (isLoading) {
     return <LoadingPage />
