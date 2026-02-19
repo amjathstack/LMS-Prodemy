@@ -2,7 +2,7 @@
 import EnrolledCourseCard from "@/app/components/EnrolledCourseCard";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function MyCoursesPage() {
 
@@ -15,7 +15,9 @@ export default function MyCoursesPage() {
   })
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+
+    window.scrollTo(0, 0);
+
   }, []);
 
   return (
