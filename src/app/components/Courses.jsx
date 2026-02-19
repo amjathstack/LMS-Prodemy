@@ -3,6 +3,7 @@ import CourseCard from "./CourseCard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Courses() {
 
@@ -17,25 +18,50 @@ export default function Courses() {
     { id: "data", name: "Data Science" },
   ];
 
-  async function fetchCourseList() {
+  const MAX_RETRIES = 5;
+
+  async function fetchCourseList(retry = 0) {
     try {
-      setLoading(true);
+      if (retry === 0) setLoading(true);
 
       const response = await axios.get("/api/course")
 
       if (response.data?.status) {
-        setCourseList(response.data.message);
+
+        if (Array.isArray(response.data.message) && response?.data?.message.length > 0) {
+
+          setCourseList(response.data.message);
+          setLoading(false);
+
+        } else {
+
+          if (retry < MAX_RETRIES) {
+            setTimeout(() => {
+              fetchCourseList(retry + 1);
+            }, 1500);
+          } else {
+            setLoading(false);
+          }
+
+        }
+
+      } else {
+
+        toast.error(response?.data?.message)
+
       }
+
     } catch (error) {
+
       console.error("Failed to fetch courses:", error)
-    } finally {
       setLoading(false);
+
     }
   }
 
   useEffect(() => {
-    fetchCourseList()
-  }, [])
+    fetchCourseList();
+  }, []);
 
   return (
     <div className="w-full px-3 sm:px-3">

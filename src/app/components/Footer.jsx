@@ -11,8 +11,7 @@ export default function Footer() {
           </h1>
 
           <p className="text-sm/7 mt-6">
-            PrebuiltUI is a free and open-source UI component library with over
-            300+ beautifully crafted, customizable components built with Tailwind CSS.
+            Deliver, manage, and track learning experiences with a flexible LMS designed for scale, performance, and measurable outcomes.
           </p>
         </div>
 
