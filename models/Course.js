@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import "./User.js"
 
 const lessonsSchema = new mongoose.Schema({
     title: { type: String, required: true },
